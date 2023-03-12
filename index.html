@@ -1,0 +1,80 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Transition test</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <style>
+    html, body
+    {
+      padding: 0;
+      margin: 0;
+    }
+    body {
+      position: relative;
+      height: 100vh;
+    }
+    * {
+      box-sizing: border-box;
+    }
+    .content, #swapper {
+      height: 100%;
+      width: 100%;
+      position: absolute;
+      top: 0;
+    }
+    #first {
+      background-color: darkred;
+      
+    }
+    #second {
+      background-color: darkblue;
+      
+    }
+    #left-panel {
+      transform: translateX(-200%);
+    }
+    #right-panel {
+      transform: translateX(200%);
+      box-shadow: 1px pink;
+    }
+    #swapper .panel {
+      transition: all 1s ease 0.5s;
+    }
+    .swapping #right-panel,
+    .swapping #left-panel {
+      transform: translateX(0);
+      
+    }
+  </style>
+</head>
+<body>
+  <svg viewbox="0 0 1 1" id="swapper">
+    <g class="panel" id="left-panel">
+      <path d="M-1 0 L-1 1 L0.26 1 L1.01 0 H-1 0 Z" fill="#000000AA"></path>
+      <path d="M-1 0 L-1 1 L0.25 1 L1 0 H-1 0 Z" fill="#16293c"></path>
+    </g>
+    <g class="panel" id="right-panel">
+      <path d="M2 0 L0.99 0 L0.24 1 L2 1 Z" fill="#000000AA"></path>
+      <path d="M2 0 L1 0 L0.25 1 L2 1 Z" fill="#16293c"></path>
+    </g>
+  </svg>
+  <script>
+    var swapper = document.getElementById('swapper');
+      var rightPanel = document.getElementById('right-panel');
+      function animate()
+      {
+        if(!rightPanel.classList.contains('closed'))
+          swapper.classList.toggle('swapping');
+      }
+
+      window.addEventListener('load', animate)
+      rightPanel.addEventListener('transitionend', () => {
+        rightPanel.classList.toggle('closed');
+        if(rightPanel.classList.contains('closed'))
+        {
+          swapper.classList.toggle('swapping');
+        }
+      });
+  </script>
+</body>
+</html>
